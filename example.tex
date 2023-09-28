@@ -1,0 +1,506 @@
+\documentclass[letterpaper,twocolumn,openany,nodeprecatedcode]{dndbook}
+
+% Use babel or polyglossia to automatically redefine macros for terms
+% Armor Class, Level, etc...
+% Default output is in English; captions are located in lib/dndstring-captions.sty.
+% If no captions exist for a language, English will be used.
+%1. To load a language with babel:
+%	\usepackage[<lang>]{babel}
+%2. To load a language with polyglossia:
+%	\usepackage{polyglossia}
+%	\setdefaultlanguage{<lang>}
+\usepackage[german]{babel}
+%\usepackage[italian]{babel}
+% For further options (multilanguage documents, hypenations, language environments...)
+% please refer to babel/polyglossia's documentation.
+
+\usepackage[utf8]{inputenc}
+\usepackage[singlelinecheck=false]{caption}
+\usepackage{lipsum}
+\usepackage{listings}
+\usepackage{shortvrb}
+\usepackage{stfloats}
+
+\captionsetup[table]{labelformat=empty,font={sf,sc,bf,},skip=0pt}
+
+\MakeShortVerb{|}
+
+\lstset{%
+  basicstyle=\ttfamily,
+  language=[LaTeX]{TeX},
+  breaklines=true,
+}
+
+\title{VCP WM 5e \\
+\large Ein TTRPG Regelwerk für Pfadfinder*innen}
+\author{Die Führerrunde}
+\date{\today}
+
+\begin{document}
+
+\frontmatter
+
+\maketitle
+
+\tableofcontents
+
+\mainmatter%
+
+\chapter{Sections}
+
+\DndDropCapLine{T}{his package is designed to aid you in} writing beautifully typeset documents for the fifth edition of the world's greatest roleplaying game. It starts by adjusting the section formatting from the defaults in \LaTeX{} to something a bit more familiar to the reader. The chapter formatting is displayed above.
+
+\section{Section}
+Sections break up chapters into large groups of associated text.
+
+\subsection{Subsection}
+Subsections further break down the information for the reader.
+
+\subsubsection{Subsubsection}
+Subsubsections are the furthest division of text that still have a block header. Below this level, headers are displayed inline.
+
+\paragraph{Paragraph}
+The paragraph format is seldom used in the core books, but is available if you prefer it to the ``normal'' style.
+
+\subparagraph{Subparagraph}
+The subparagraph format with the paragraph indent is likely going to be more familiar to the reader.
+
+\section{Special Sections}
+The module also includes functions to aid in the proper typesetting of multi-line section headers: |\DndFeatHeader| for feats, |\DndItemHeader| magic items and traps, and |\DndSpellHeader| for spells.
+
+\DndFeatHeader{Typesetting Savant}[Prerequisite: \LaTeX{} distribution]
+You have acquired a package which aids in typesetting source material for one of your favorite games. You have advantage on Intelligence checks to typeset new content. On a failed check, you can ask questions online at the package's website.
+
+\DndItemHeader{Foo's Quill}{Wondrous item, rare}
+This quill has 3 charges. While holding it, you can use an action to expend 1 of its charges. The quill leaps from your hand and writes a contract applicable to your situation.
+
+The quill regains 1d3 expended charges daily at dawn.
+
+\DndSpellHeader%
+  {Beautiful Typesetting}
+  {4th-level illusion}
+  {1 action}
+  {5 feet}
+  {S, M (ink and parchment, which the spell consumes)}
+  {Until dispelled}
+You are able to transform a written message of any length into a beautiful scroll. All creatures within range that can see the scroll must make a wisdom saving throw or be charmed by you until the spell ends.
+
+While the creature is charmed by you, they cannot take their eyes off the scroll and cannot willingly move away from the scroll. Also, the targets can make a wisdom saving throw at the end of each of their turns. On a success, they are no longer charmed.
+
+\section{Map Regions}
+The map region functions |\DndArea| and |\DndSubArea| provide automatic numbering of areas.
+
+\DndArea{Village of Hommlet}
+This is the village of hommlet.
+
+\DndSubArea{Inn of the Welcome Wench}
+Inside the village is the inn of the Welcome Wench.
+
+\DndSubArea{Blacksmith's Forge}
+There's a blacksmith in town, too.
+
+\DndArea{Foo's Castle}
+This is foo's home, a hovel of mud and sticks.
+
+\DndSubArea{Moat}
+This ditch has a board spanning it.
+
+\DndSubArea{Entrance}
+A five-foot hole reveals the dirt floor illuminated by a hole in the roof.
+
+\chapter{Text Boxes}
+
+The module has three environments for setting text apart so that it is drawn to the reader's attention. |DndReadAloud| is used for text that a game master would read aloud.
+
+\begin{DndReadAloud}
+  As you approach this module you get a sense that the blood and tears of many generations went into its making. A warm feeling welcomes you as you type your first words.
+\end{DndReadAloud}
+
+\section{As an Aside}
+The other two environments are the |DndComment| and the |DndSidebar|. The |DndComment| is breakable and can safely be used inline in the text.
+
+\begin{DndComment}{This Is a Comment Box!}
+  A |DndComment| is a box for minimal highlighting of text. It lacks the ornamentation of |DndSidebar|, but it can handle being broken over a column.
+\end{DndComment}
+
+The |DndSidebar| is not breakable and is best used floated toward a page corner as it is below.
+
+\begin{DndSidebar}[float=!b]{Behold the DndSidebar!}
+  The |DndSidebar| is used as a sidebar. It does not break over columns and is best used with a figure environment to float it to one corner of the page where the surrounding text can then flow around it.
+\end{DndSidebar}
+
+\section{Tables}
+The |DndTable| colors the even rows and is set to the width of a line by default.
+
+\begin{DndTable}[header=Nice Table]{XX}
+    \textbf{Table head}  & \textbf{Table head} \\
+    Some value  & Some value \\
+    Some value  & Some value \\
+    Some value  & Some value
+\end{DndTable}
+
+\chapter{Monsters and NPCs}
+
+% Monster stat block
+\begin{DndMonster}[float*=b,width=\textwidth + 8pt]{Monster Foo}
+  \begin{multicols}{2}
+    \DndMonsterType{Medium aberration (metasyntactic variable), neutral evil}
+
+    % If you want to use commas in the key values, enclose the values in braces.
+    \DndMonsterBasics[
+        armor-class = {9 (12 with \emph{mage armor})},
+        hit-points  = {\DndDice{3d8 + 3}},
+        speed       = {30 ft., fly 30 ft.},
+      ]
+
+    \DndMonsterAbilityScores[
+        str = 12,
+        dex = 8,
+        con = 13,
+        int = 10,
+        wis = 14,
+        cha = 15,
+      ]
+
+    \DndMonsterDetails[
+        %saving-throws = {Str +0, Dex +0, Con +0, Int +0, Wis +0, Cha +0},
+        %skills = {Acrobatics +0, Animal Handling +0, Arcana +0, Athletics +0, Deception +0, History +0, Insight +0, Intimidation +0, Investigation +0, Medicine +0, Nature +0, Perception +0, Performance +0, Persuasion +0, Religion +0, Sleight of Hand +0, Stealth +0, Survival +0},
+        %damage-vulnerabilities = {cold},
+        %damage-resistances = {bludgeoning, piercing, and slashing from nonmagical attacks},
+        %damage-immunities = {poison},
+        %condition-immunities = {poisoned},
+        senses = {darkvision 60 ft., passive Perception 10},
+        languages = {Common, Goblin, Undercommon},
+        challenge = 1,
+      ]
+    % Traits
+    \DndMonsterAction{Innate Spellcasting}
+    Foo's spellcasting ability is Charisma (spell save DC 12, +4 to hit with spell attacks). It can innately cast the following spells, requiring no material components:
+    \begin{DndMonsterSpells}
+      \DndInnateSpellLevel{misty step}
+      \DndInnateSpellLevel[3]{fog cloud, rope trick}
+      \DndInnateSpellLevel[1]{identify}
+    \end{DndMonsterSpells}
+
+    \DndMonsterAction{Spellcasting}
+    Foo is a 2nd-level spellcaster. Its spellcasting ability is Charisma (spell save DC 12, +4 to hit with spell attacks). It has the following sorcerer spells prepared:
+    \begin{DndMonsterSpells}
+      \DndMonsterSpellLevel{blade ward, fire bolt, light, shocking grasp}
+      \DndMonsterSpellLevel[1][3]{burning hands, mage armor, shield}
+    \end{DndMonsterSpells}
+
+    \DndMonsterSection{Actions}
+    \DndMonsterAction{Multiattack}
+    The foo makes two melee attacks.
+
+    %Default values are shown commented out
+    \DndMonsterAttack[
+      name=Dagger,
+      %distance=both, % valid options are in the set {both,melee,ranged},
+      %type=weapon, %valid options are in the set {weapon,spell}
+      mod=+3,
+      %reach=5,
+      %range=20/60,
+      %targets=one target,
+      dmg=\DndDice{1d4+1},
+      dmg-type=piercing,
+      %plus-dmg=,
+      %plus-dmg-type=,
+      %or-dmg=,
+      %or-dmg-when=,
+      %extra=,
+    ]
+
+    %\DndMonsterMelee calls \DndMonsterAttack with the melee option
+    \DndMonsterMelee[
+      name=Flame Tongue Longsword,
+      mod=+3,
+      %reach=5,
+      %targets=one target,
+      dmg=\DndDice{1d8+1},
+      dmg-type=slashing,
+      plus-dmg=\DndDice{2d6},
+      plus-dmg-type=fire,
+      or-dmg=\DndDice{1d10+1},
+      or-dmg-when=if used with two hands,
+      %extra=,
+    ]
+
+    %\DndMonsterRanged calls \DndMonsterAttack with the ranged option
+    \DndMonsterRanged[
+      name=Assassin's Light Crossbow,
+      mod=+1,
+      range=80/320,
+      dmg=\DndDice{1d8},
+      dmg-type=piercing,
+      %plus-dmg=,
+      %plus-dmg-type=,
+      %or-dmg=,
+      %or-dmg-when=,
+      extra={, and the target must make a DC 15 Constitution saving throw, taking 24 (7d6) poison damage on a failed save, or half as much damage on a successful one}
+    ]
+
+    % Legendary Actions
+    \DndMonsterSection{Legendary Actions}
+    The foo can take 3 legendary actions, choosing from the options below. Only one legendary action option can be used at a time and only at the end of another creature's turn. The foo regains spent legendary actions at the start of its turn.
+
+    \begin{DndMonsterLegendaryActions}
+      \DndMonsterLegendaryAction{Move}{The foo moves up to its speed.}
+      \DndMonsterLegendaryAction{Dagger Attack}{The foo makes a dagger attack.}
+      \DndMonsterLegendaryAction{Create Contract (Costs 3 Actions)}{The foo presents a contract in a language it knows and waves it in the face of a creature within 10 feet. The creature must make a DC 10 Intelligence saving throw. On a failure, the creature is incapacitated until the start of the foo's next turn. A creature who cannot read the language in which the contract is written has advantage on this saving throw.}
+    \end{DndMonsterLegendaryActions}
+  \end{multicols}
+\end{DndMonster}
+
+The |DndMonster| environment is used to typeset monster and NPC stat blocks. The module supplies many functions to easily typeset the contents of the stat block
+
+\chapter{Colors}
+
+\begin{table*}[b]%
+  \caption{}\label{tab:colors}
+
+  \begin{DndTable}[width=\linewidth,header=Colors Supported by This Package]{lX}
+    \textbf{Color}                  & \textbf{Description} \\
+    |PhbLightGreen|                 & Light green used in PHB Part 1 (Default) \\
+    |PhbLightCyan|                  & Light cyan used in PHB Part 2 \\
+    |PhbMauve|                      & Pale purple used in PHB Part 3 \\
+    |PhbTan|                        & Light brown used in PHB appendix \\
+    |DmgLavender|                   & Pale purple used in DMG Part 1 \\
+    |DmgCoral|                      & Orange-pink used in DMG Part 2 \\
+    |DmgSlateGray| (|DmgSlateGrey|) & Blue-gray used in PHB Part 3 \\
+    |DmgLilac|                      & Purple-gray used in DMG appendix \\
+  \end{DndTable}
+\end{table*}
+
+This package provides several global color variables to style |DndComment|, |DndReadAloud|, |DndSidebar|, and |DndTable| environments.
+
+\begin{DndTable}[header=Box Colors]{lX}
+  \textbf{Color}   & \textbf{Description} \\
+  |commentcolor|   & |DndComment| background \\
+  |readaloudcolor| & |DndReadAloud| background \\
+  |sidebarcolor|   & |DndSidebar| background \\
+  |tablecolor|     & background of even |DndTable| rows \\
+\end{DndTable}
+
+They also accept an optional color argument to set the color for a single instance. See Table~\ref{tab:colors} for a list of core book accent colors.
+
+\begin{lstlisting}
+\begin{DndTable}[color=PhbLightCyan]{cX}
+  \textbf{d8} & \textbf{Item} \\
+  1 & Small wooden button \\
+  2 & Red feather \\
+  3 & Human tooth \\
+  4 & Vial of green liquid \\
+  6 & Tasty biscuit \\
+  7 & Broken axe handle \\
+  8 & Tarnished silver locket \\
+\end{DndTable}
+\end{lstlisting}
+
+\begin{DndTable}[color=PhbLightCyan]{cX}
+  \textbf{d8} & \textbf{Item} \\
+  1 & Small wooden button \\
+  2 & Red feather \\
+  3 & Human tooth \\
+  4 & Vial of green liquid \\
+  6 & Tasty biscuit \\
+  7 & Broken axe handle \\
+  8 & Tarnished silver locket \\
+\end{DndTable}
+
+\section{Themed Colors}
+Use |\DndSetThemeColor[<color>]| to set |commentcolor|, |readaloudcolor|, |sidebarcolor|, and |tablecolor| to a specific color. Calling |\DndSetThemeColor| without an argument sets those colors to the current |themecolor|. In the following example the group limits the change to just a few boxes; after the group finishes, the colors are reverted to what they were before the group started.
+
+\begin{lstlisting}
+\begingroup
+\DndSetThemeColor[PhbMauve]
+
+\begin{DndComment}{This Comment Is in Mauve}
+  This comment is in the the new color.
+\end{DndComment}
+
+\begin{DndSidebar}{This Sidebar Is Also Mauve}
+  The sidebar is also using the new theme color.
+\end{DndSidebar}
+\endgroup
+\end{lstlisting}
+
+\begingroup
+\DndSetThemeColor[PhbMauve]
+
+\begin{DndComment}{This Comment Is in Mauve}
+  This comment is in the the new color.
+\end{DndComment}
+
+\begin{DndSidebar}{This Sidebar Is Also Mauve}
+  The sidebar is also using the new theme color.
+\end{DndSidebar}
+\endgroup
+
+\chapter{Einführung}
+Herzlich willkommen im Regelwerk für unser gemeinsames Tabletop-Rollenspiel für einen Pfadfinderstamm! Wir freuen uns, dass du hier bist und bereit bist, mit uns auf spannende Abenteuerreisen zu gehen. Dieses Regelwerk dient als solide Grundlage für die Entwicklung von weiteren Abenteuer-Modulen, die von uns allen gemeinsam gestaltet werden können.
+
+Unser Spiel basiert nicht nur auf unserer eigenen Fantasie, sondern auch auf den Möglichkeiten, die uns Open-Source-Tools wie das D\&D 5e Latex Template von rpgTex, ChatGPT und Midjourney bieten. Diese Hilfsmittel erlauben es uns, eine lebendige und abwechslungsreiche Spielwelt zu erschaffen, in der wir uns frei entfalten können.
+
+Dieses Tabletop-Rollenspiel eignet sich besonders gut für Winterfahrten oder Sippenübernachtungen, wo wir uns in gemütlicher Atmosphäre um das Spielbrett versammeln können. Hier haben wir die Gelegenheit, unsere Kreativität zu entfesseln, gemeinsam Entscheidungen zu treffen und aufregende Geschichten zu erleben.
+
+Das Spiel selbst basiert auf dem bewährten D\&D 5e-Regelsystem, das viele von uns bereits kennen und lieben. Wir werden es jedoch an unsere Bedürfnisse und Vorlieben anpassen, um ein einzigartiges Spielerlebnis zu schaffen, das speziell auf unseren Pfadfinderstamm zugeschnitten ist.
+
+Die Regeln, die wir in diesem Regelwerk festlegen, dienen als Grundlage für unsere Abenteuer. Sie geben uns Struktur und helfen uns, ein faires und ausgewogenes Spiel zu gewährleisten. Gleichzeitig ermutigen wir dich, deine eigenen Ideen einzubringen und mit uns gemeinsam die Welt dieses Spiels zu formen.
+
+Also schnapp dir deine Würfel, stelle deine Charaktere zusammen und lass uns gemeinsam in eine Welt voller fantastischer Geschichten und heldenhafter Taten eintauchen. Wir sind bereit, unsere eigenen Legenden zu schmieden, und wir hoffen, dass du dich uns anschließt, um dieses aufregende Abenteuer zu erleben!
+
+Bereite dich darauf vor, deinen Verstand zu schärfen, mutige Entscheidungen zu treffen und unerwarteten Herausforderungen gegenüberzutreten. Das Regelwerk steht dir zur Verfügung, um deine Kreativität zu beflügeln und dir den nötigen Rahmen zu geben, um großartige Geschichten zu erzählen.
+
+Mögen unsere Reisen voller Spaß, Freundschaft und unvergesslicher Erinnerungen sein!
+\chapter{Klassen}
+\DndDropCapLine{K}lassen stellen die Fähigkeiten eines Characters dar. Jede Klasse besitzt einzigartige Fähigkeiten, die ihren Spielstil ausmacht. Ein Nahkämpfer wird meist vorne an der Front stehen während ein Fernkämpfer eher versucht, aus der Ferne Unterstützung zu leisten. Auch unterscheiden sich die Gegenstände, die man jeweils ausrüsten und verwenden kann. Jede Klasse besitzt eine von drei Leiteigenschaften:
+
+\subsection{Leiteigenschaften}
+
+\subparagraph{Geschicklichkeit}  Geschicklichkeit ermöglicht es uns, unvorhersehbare Situationen zu meistern und unsere Fähigkeiten in raffinierten Manövern zur Schau zu stellen. Ob es darum geht, geschickt an Wachen vorbeizuschleichen, akrobatische Kunststücke auszuführen oder präzise Pfeile auf entfernte Ziele abzuschießen, Geschicklichkeit eröffnet uns neue Wege, um Hindernisse zu überwinden und unsere Ziele zu erreichen.
+
+\subparagraph{Intelligenz}  Intelligenz spielt eine zentrale Rolle, insbesondere wenn es um Magie und Zauber geht. Die Spielenden müssen klug handeln, um komplexe Zaubersprüche zu beherrschen, mystische Rätsel zu entschlüsseln und versteckte Kenntnisse zu erlangen. Die Intelligenz ihrer Charaktere ermöglicht es ihnen, die Kräfte der Magie zu verstehen und sie effektiv einzusetzen, sei es zum Schutz ihrer Gefährten oder zur Manipulation der Elemente. Mit Logik, Kreativität und tiefer Einsicht in die magischen Künste können sie die Grenzen der Realität überwinden und in dieser Spielwelt eine erstaunliche Macht entfalten. 
+
+\subparagraph{Stärke} Stärke gibt an, wie kraftvoll und unnachgiebig Charaktere sind. Mit Muskelkraft und Ausdauer können sie schwere Waffen schwingen, massive Hindernisse überwinden und im Kampf gegen gefährliche Kreaturen standhalten. Die Stärke ihrer Charaktere ermöglicht es ihnen, diejenigen zu beschützen, die ihnen am Herzen liegen, und sich durch die wildesten Abenteuer zu führen. 
+
+\subsection{Weitere Eigenschaften}
+
+\subparagraph{Lebenspunkte} Lebenspunkte sind der Maßstab für die Widerstandsfähigkeit und Ausdauer eines Charakters. Sie zeigen an, wie viel Schaden ein Charakter aushalten kann, bevor er erschöpft oder verwundet wird. Die Lebenspunkte repräsentieren die Entschlossenheit und den Überlebenswillen des Charakters, der selbst in den härtesten Kämpfen weiterkämpft. Sie sind das Fundament, auf dem die Helden aufbauen, um den Gefahren der Spielwelt zu trotzen und unvergessliche Siege zu erringen.
+
+\subparagraph{Agilität} Agilität beschreibt die Beweglichkeit und Wendigkeit eines Charakters. Sie bestimmt, wie weit und wie schnell sich ein Charakter über das Schlachtfeld bewegen kann. Ein agiler Charakter kann geschickt Hindernissen ausweichen, sich elegant durch Menschenmengen schlängeln oder sogar akrobatische Stunts vollführen, um seinen Gegnern einen Schritt voraus zu sein. Agilität ermöglicht es einem Charakter, sich taktisch klug zu positionieren und in jeder Situation einen Vorteil zu erlangen.
+
+\subparagraph{Initiative} Initiative ist ein Maß dafür, wie schnell ein Charakter in den Kämpfen handeln kann. Sie bestimmt die Reaktionsfähigkeit und den Vorteil des Charakters gegenüber anderen Spielern und Gegnern. Ein Charakter mit hoher Initiative ist in der Lage, blitzschnell auf Veränderungen zu reagieren und schneller als seine Widersacher zu handeln. 
+
+\subparagraph{Glück} Glück ist eine geheimnisvolle und unberechenbare Eigenschaft, die die Wahrscheinlichkeit beeinflusst, dass ein Charakter einen verheerenden Schlag oder einen glücklichen Treffer landet. Es ist das Schicksal, das über das Ergebnis eines Würfelwurfs entscheidet und manchmal das Unmögliche möglich macht. Ein charakterstarker Glücksbringer kann das Schlachtenglück auf seine Seite ziehen und unvorhergesehene Wendungen herbeiführen. Das Glück begleitet diejenigen, die den Mut haben, es herauszufordern, und kann den Verlauf des Abenteuers auf unerwartete Weise verändern.
+
+\section{Barde}
+Die Klasse des Barden verkörpert die harmonische Verbindung zwischen Musik, Geschichtenerzählen und Abenteuerlust. Barden sind Meister der Melodien und beherrschen die Kunst der inspirierenden Lieder, der lebhaften Tänze und der mitreißenden Geschichten. In dieser Spielwelt spielen Barden eine bedeutende Rolle, da sie nicht nur Unterhaltung und Freude verbreiten, sondern auch als Vermittler zwischen den Völkern und den unterschiedlichen Kulturen fungieren
+
+\subsection{Musik und Magie}
+Was Barden wirklich einzigartig macht, ist ihre enge Verbindung zur Magie und die Fähigkeit, sie durch Musik und Gesang zu kanalisieren. Wenn ein Barde seine Melodien spielt oder seine Lieder singt, erweckt er nicht nur Emotionen und Stimmungen, sondern kann auch magische Energien freisetzen. Die Musik wird zu einer Brücke zwischen den Welten, und die Klänge, die der Barde erschafft, haben die Kraft, Verbündete zu stärken, Feinde zu verwirren oder sogar Heilung zu spenden.
+
+Die Magie des Barden ist ein Zusammenspiel von Musik und den inneren Kräften des Barde selbst. Durch ihre instrumentale Meisterschaft und ihre ausdrucksstarke Stimme sind Barden in der Lage, die Essenz der Welt um sie herum zu spüren und diese Energie in mächtige Zauber umzuwandeln. Ob sie nun epische Balladen vortragen, um ihre Gefährten zu inspirieren, oder mit ihrer Musik die Herzen der Zuhörer berühren, die Magie des Barden ist eine Quelle der Faszination und der Kraft.
+
+\subsection{Eigenschaften}
+Ein Barde hat die folgenden Eigenschaften:
+
+\begin{itemize}
+    \item \textbf{Lebenspunkte:} 8 
+    \item \textbf{Geschicklichkeit:} 8 
+    \item \textbf{Intelligenz:} 8 
+    \item \textbf{Stärke:} 8 
+    \item \textbf{Agilität:} 8 
+    \item \textbf{Glück:} 8
+\end{itemize}
+
+\section{Bogenschütze}
+Die Klasse des Bogenschützen verkörpert die Meisterschaft im Umgang mit dem Bogen und die Kunst des Fernkampfes. Bogenschützen sind unerreicht darin, präzise Pfeile auf ihre Ziele abzuschießen und tödliche Treffer zu landen. Mit ihrem geschulten Auge, ihrer ruhigen Hand und ihrer scharfen Konzentration sind sie gefürchtete Gegner auf dem Schlachtfeld und zuverlässige Verbündete in jedem Abenteuer.
+
+\subsection{Tödliche Jäger}
+Bogenschützen sind wahre Meister der Präzision und des Jagens. Sie beherrschen die Kunst, ihre Ziele aus der Ferne ins Visier zu nehmen und mit jedem Schuss tödlichen Schaden anzurichten. Mit ihren gut gezielten Pfeilen können sie Gegner von weitem ausschalten, bevor diese überhaupt die Chance haben, sich zu nähern. In der Wildnis sind Bogenschützen unschlagbare Jäger, die ihre Beute mit beeindruckender Genauigkeit erlegen und für ihre Gefährten wichtige Nahrungsressourcen sicherstellen.
+
+\subsection{Freiheitsliebende Abenteurer} Mit ihrem Bogen in der Hand und einem Herzen voller Entschlossenheit können Bogenschützen sich mühelos in unübersichtlichem Gelände bewegen und ihre Gegner mit geschickten Ausweichmanövern und strategischer Distanzierung auf Distanz halten. Diese Fähigkeit zur Unabhängigkeit erlaubt es ihnen, sich frei in der Spielwelt zu bewegen und auch in den gefährlichsten Situationen die Kontrolle zu behalten. Sie sind die wahren Freigeister des Abenteuers und lassen sich nicht von Konventionen oder Hindernissen einschränken.
+
+\begingroup
+\DndSetThemeColor[PhbMauve]
+\begin{DndSidebar}{Der lachende Elf}
+  Wenn man einen Elf, der dazu auch noch Bogenschütze ist, zu seinen Gefährten zählt, dann kommt es leicht vor, dass man nur noch ein weit entferntes, schallendes Lachen vernimmt, während die Gruppe vorne im erbiterten Kampf dem Tode ins Auge blickt...
+\end{DndSidebar}
+\endgroup
+\subsection{Eigenschaften}
+Ein Bogenschütze hat die folgenden Eigenschaften:
+
+\begin{itemize}
+    \item \textbf{Lebenspunkte:} 8 
+    \item \textbf{Geschicklichkeit:} 8 
+    \item \textbf{Intelligenz:} 8 
+    \item \textbf{Stärke:} 8 
+    \item \textbf{Agilität:} 8 
+    \item \textbf{Glück:} 8
+\end{itemize}
+
+\section{Dieb}
+\subsection{Eigenschaften}
+Ein Dieb hat die folgenden Eigenschaften:
+
+\begin{itemize}
+    \item \textbf{Lebenspunkte:} 8 
+    \item \textbf{Geschicklichkeit:} 8 
+    \item \textbf{Intelligenz:} 8 
+    \item \textbf{Stärke:} 8 
+    \item \textbf{Agilität:} 8 
+    \item \textbf{Glück:} 8
+\end{itemize}
+
+\section{Krieger}
+\subsection{Eigenschaften}
+Ein Krieger hat die folgenden Eigenschaften:
+
+\begin{itemize}
+    \item \textbf{Lebenspunkte:} 8 
+    \item \textbf{Geschicklichkeit:} 8 
+    \item \textbf{Intelligenz:} 8 
+    \item \textbf{Stärke:} 8 
+    \item \textbf{Agilität:} 8 
+    \item \textbf{Glück:} 8
+\end{itemize}
+
+\section{Magier}
+\subsection{Eigenschaften}
+Ein Magier hat die folgenden Eigenschaften:
+
+\begin{itemize}
+    \item \textbf{Lebenspunkte:} 8 
+    \item \textbf{Geschicklichkeit:} 8 
+    \item \textbf{Intelligenz:} 8 
+    \item \textbf{Stärke:} 8 
+    \item \textbf{Agilität:} 8 
+    \item \textbf{Glück:} 8
+\end{itemize}
+
+\chapter{Ablauf}
+
+\section{Fluff-Phase}
+
+\subsection{Hintergrundgeschichte}
+
+\subsection{Klassenauswahl}
+
+\section{Level-Phase}
+\subsection{Eigenständiger Programmpunkt}
+\subsection{Belohnung für andere Programmpunkte}
+\subsubsection{Erfahrungspunkte}
+Einfache EXP sammeln
+
+\subsubsection{Deck-Building}
+Wenn man eine Deck Building Mechanik verwenden will, kann man hier Utility Karten anbieten.
+Hierfür so viele Karten wie Programmpunkte, bei denen man etwas gewinnen kann (bzw. mal Faktor 2 oder 3, wenn auch zweiter und dritter Platz etwas erhalten können). 
+Karten sollten wahrscheinlich am besten allgemeine Utility Karten sein, die jede Klasse nutzen kann oder z.B. Items für jede Klasse.
+Wenn man anfangen will, in ein Theme reinzubauen, dann müsste man entsprechend viele Karten vorher vorbereiten -> Das ist eine Heidenarbeit. 
+
+\section{Dungeon-Phase}
+In der Dungeon-Phase geht es darum, sich in Brettspiel-Form mit dem eigenen Charakter ins Abenteuer zu stürzen.
+Dabei sind der Kreativität keine Grenzen gesetzt, die verschiedensten Szenarien können hier
+gespielt werden. Im Folgenden wollen wir euch hier eine kleine Auswahl dazu geben.
+Bevor wir uns aber in den Untiefen unserer Fantasie verlieren, noch einige einleitende Punkte.
+
+\subsection{Allgemeine Punkte}
+Die Dungeon-Phase ist das Highlight des ganzen Programmpunktes und sollte dementsprechend gut
+vorbereitet sein. Hier die wichtigsten Aspekte:
+
+\begin{itemize}
+    \item 3D-Druck / Miniaturen und Gelände: Alles sollte von vornherein bereit zum Spielen sein
+    \item Klassen- und Item-Karten: Am besten laminiert
+    \item Aufteilung der Gruppen auf die Szenarien: Klarer Plan, welche Gruppe wann wo spielt; Zeit im Blick behalten
+    \item Regeln parat haben: Sowohl als Spielleitung als auch für die Spieler und die jeweiligen Klassen. ggf die Regeln auch vorher ausdrucken und auf kleinen Karten bereit haben (Handout für Spieler)
+\end{itemize}
+
+\subsection{Klassischer Dungeon-Crawler}
+
+\subsection{\grqq Hold the door!\grqq}
+
+\subsection{Frontlinie}
+Hierher wagen sich nur die tapfersten alle Abenteurer. Hier können
+
+\end{document}
